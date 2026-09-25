@@ -217,9 +217,19 @@ def _(mo):
 
     Use an LLM (molab's built-in agent, ChatGPT, Claude, Gemini, ...) to find the source paper for your dataset and learn what the score measures. Here is an example prompt. Replace the dataset ID with your own.
 
-    > I am working with the ProteinGym DMS substitution dataset `Q837P4_ENTFA_Meier_2023`. Find the original paper that produced this deep mutational scanning data. Give me the title, first author, year, and a link (DOI or journal). Then explain, in plain terms: what experiment was done, what the `DMS_score` column measures, and whether a higher score means the mutant is better or worse. Tell me which parts you are unsure about. Use ASD-STE100 (Simplified Technical English) rules for wording: one idea per sentence, active voice, approved simple words only, no jargon, no strung-together nouns.
+    > I am working with the ProteinGym DMS substitution dataset `Q837P4_ENTFA_Meier_2023`.
+    >
+    > First, find my dataset in ProteinGym's reference table: <https://raw.githubusercontent.com/OATML-Markslab/ProteinGym/main/reference_files/DMS_substitutions.csv>. It is a CSV file. Find the row where the `DMS_id` column equals my dataset ID exactly. In that row:
+    >
+    > - `title`, `first_author` and `year` give the source paper.
+    > - `jo` holds the link to the paper. The column name is truncated. The value is almost always a DOI.
+    > - `molecule_name` and `source_organism` name the protein and the organism.
+    > - `selection_assay` and `selection_type` name the experiment.
+    > - `raw_DMS_directionality` is `1` when a higher `DMS_score` is better, and `-1` when a higher score is worse.
+    >
+    > Then read the paper and tell me: the full citation with a clickable DOI link, what experiment the authors did, what the `DMS_score` column measures, and whether a higher score means the mutant is better or worse. Tell me which parts you are unsure about. Use ASD-STE100 (Simplified Technical English) rules for wording: one idea per sentence, active voice, approved simple words only, no jargon, no strung-together nouns.
 
-    LLMs can make up citations. Open the link and check that the paper is real and that it matches your dataset.
+    LLMs can make up citations. Open the DOI link and check that the paper is real and that it matches your dataset.
 
     In the markdown cell below, write:
 
